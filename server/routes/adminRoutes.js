@@ -1,21 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const Admin = require("../models/adminModel");
+const bcrypt = require("bcrypt");
+const { signupAdmin, loginAdmin, updateCourse,getCourses, uploadCourse } = require('../controller/authController');
+const authenticateJwt = require('../middlewares/authMiddleware');
 
-router.get('/courses', async(req, res)=>{
-  res.status(200).json({message: 'Courses found'})
-});
-router.post('/signup', async(req, res)=>{
-  const {username, password} = req.body;
-
-});
-router.post('/login', async(req, res)=>{
-  const {username, password} = req.headers;
-});
-
-router.post('/courses', async(req, res)=>{
-
-});
-
-router.put('/courses/:courseId', async(req, res)=>{})
+router.get('/getcourses',authenticateJwt, getCourses );
+router.post('/signup', signupAdmin);
+router.post('/login', loginAdmin);
+router.post('/courses', authenticateJwt, uploadCourse);
+router.put('/courses/:courseId',authenticateJwt, updateCourse);
 
 module.exports = router;
