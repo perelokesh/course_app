@@ -2,9 +2,11 @@ const jwt = require("jsonwebtoken");
 
 const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers.authorization;
+  console.log(authHeader);
   if (authHeader) {
     const token = authHeader.split(' ')[1];
-    jwt.verify(token, SECRET, (err, user) => {
+    console.log(token);
+    jwt.verify(token, process.env.Secret, (err, user) => {
       if (err) {
         return res.sendStatus(403);
       }
@@ -12,7 +14,7 @@ const authenticateJwt = (req, res, next) => {
       next();
     });
   } else {
-    res.sendStatus(401);
+    res.sendStatus(401).json({message:"NotFound"});
   }
 };
 

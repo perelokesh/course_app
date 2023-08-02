@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const Course = require("../models/courseModel");
 
 const getCourses =  async(req, res)=>{
-  const course = await Course.find({})
-  res.status(200).json({course})
+  const course = await Admin.find({});
+  res.json({course});
 };
 const signupAdmin = async(req, res)=>{
   const {username, password} = req.body;
