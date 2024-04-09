@@ -1,14 +1,14 @@
+import User  from "../models/userModel.js";
+import jwt from "jsonwebtoken";
+import * as bcrypt from "bcrypt";
+import   Course  from "../models/courseModel.js";
 
-const User = require("../models/userModel.js");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const Course = require("../models/courseModel.js");
 
-const getCourses = async (req, res) => {
+export const getCourses = async (req, res) => {
   const course = await Course.find({published:true})
   res.status(200).json({course})
 }
-const signupUser = async(req,res) => {
+export const signupUser = async(req,res) => {
    const {username , password} = req.body;
    const checkUser = await User.findOne({username: username})
    if(checkUser){
@@ -21,7 +21,7 @@ const signupUser = async(req,res) => {
    }
 };
 
-const loginUser = async(req,res) => {
+export const loginUser = async(req,res) => {
   const {username, password} = req.headers;
   const user = await User.findOne({username: username});
   const comparePwd = await bcrypt.compare(password, user.password);
@@ -42,7 +42,7 @@ const loginUser = async(req,res) => {
   }
 }
 
-const purchasCourse = async(req,res) => {
+export const purchasCourse = async(req,res) => {
   const course = await Course.findById(req.params.courseId);
   console.log(course);
   if (course) {
@@ -60,7 +60,7 @@ const purchasCourse = async(req,res) => {
 }
 
 
-const purchasedCoursesList =  async(req,res) => {
+export const purchasedCoursesList =  async(req,res) => {
   const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
   if (user) {
     res.json({ purchasedCourses: user.purchasedCourses || [] });
@@ -69,4 +69,3 @@ const purchasedCoursesList =  async(req,res) => {
   }
 }
 
-module.exports = {signupUser, loginUser, purchasCourse, purchasedCoursesList, getCourses};

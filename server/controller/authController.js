@@ -1,13 +1,14 @@
-const Admin = require("../models/adminModel");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const Course = require("../models/courseModel");
+import Admin  from "../models/adminModel.js";
+import * as bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
+import Course  from "../models/courseModel.js";
 
-const getCourses =  async(req, res)=>{
+
+export const getCourses =  async(req, res)=>{
   const course = await Admin.find({});
   res.json({course});
 };
-const signupAdmin = async(req, res)=>{
+export const signupAdmin = async(req, res)=>{
   const {username, password} = req.body;
   const checkAdmin = await Admin.findOne({username});
   if(checkAdmin){
@@ -20,7 +21,7 @@ const signupAdmin = async(req, res)=>{
   }
 
 };
-const loginAdmin = async(req, res)=>{
+export const loginAdmin = async(req, res)=>{
   const {username, password} = req.headers;
   const admin = await Admin.findOne({username: username});
   const comparePwd = await bcrypt.compare(password, admin.password);
@@ -40,13 +41,13 @@ const loginAdmin = async(req, res)=>{
   }
 };
 
-const uploadCourse = async(req, res)=>{
+export const uploadCourse = async(req, res)=>{
   const course = new Course(req.body);
   course.save();
   res.status(200).json({message: 'Course saved successfully'});
 }
 
-const updateCourse = async(req, res)=>{
+export const updateCourse = async(req, res)=>{
   const course = await Course.findByIdAndUpdate(req.params.courseId, req.body, { new: true });
   if (course) {
     res.json({ message: 'Course updated successfully' });
@@ -54,4 +55,4 @@ const updateCourse = async(req, res)=>{
     res.status(404).json({ message: 'Course not found' });
   }
 }
-module.exports = {signupAdmin, loginAdmin, getCourses, uploadCourse, updateCourse};
+

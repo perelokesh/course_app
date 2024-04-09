@@ -1,11 +1,12 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import {userRoutes} from './routes/userRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import { dbConnection } from './config.js';
+dotenv.config();
 
-
-require("dotenv").config();
-const userRoutes = require('./routes/userRoutes');
-const adminRoutes = require('./routes/adminRoutes');
-const dbConnection = require('./config');
+ 
 
 const app = express();
 const db = dbConnection;

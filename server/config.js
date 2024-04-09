@@ -1,11 +1,13 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config()
 const connectionParams = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   dbName: 'Course_App'
 }
 
-let dbConnection;
+export let dbConnection;
 try {
   mongoose.connect(process.env.DB, connectionParams);
   console.log("Connected to database successfully");
@@ -14,4 +16,3 @@ try {
   console.log("Could not connect database!");
 }
 
-module.exports = dbConnection;

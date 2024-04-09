@@ -1,12 +1,12 @@
-const express = require('express');
-const router = express.Router();
-const authenticateJwt = require("../middlewares/authMiddleware.js");
-const { signupUser, loginUser,getCourses, purchasCourse, purchasedCoursesList } = require('../controller/usercontroller.js');
+import express from "express"; 
+import authenticateJwt from "../middlewares/authMiddleware.js";
+import {signupUser, loginUser, getCourses, purchasCourse, purchasedCoursesList} from "../controller/usercontroller.js"
 
-router.get("/courses", authenticateJwt, getCourses);
-router.post('/signup', signupUser);
-router.post('/login', loginUser);
-router.post('/courses/:courseId',authenticateJwt,purchasCourse);
-router.get('/courses/courseList', authenticateJwt, purchasedCoursesList);
+export const userRoutes = express.Router();
 
-module.exports = router;
+userRoutes.get("/courses", authenticateJwt, getCourses);
+userRoutes.post('/signup', signupUser);
+userRoutes.post('/login', loginUser);
+userRoutes.post('/courses/:courseId',authenticateJwt,purchasCourse);
+userRoutes.get('/courses/courseList', authenticateJwt, purchasedCoursesList);
+
